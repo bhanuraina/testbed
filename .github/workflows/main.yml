@@ -47,4 +47,4 @@ jobs:
           echo check ruby version
           ruby -v
           bundle-audit
-          apt-rdepends webp
+          sudo apt -qqq list webp freeglut3 libgd3 libtiff5 libwebp7 libwebpdemux2 libwebpmux3 | grep installed 
