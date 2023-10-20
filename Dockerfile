@@ -5,6 +5,5 @@ RUN gem install jwt bundler && \
     apk add curl
    
 
-RUN bundle update && \
-    bundle exec bundle-audit
+RUN bundler-audit update
 ENTRYPOINT [echo "Hello Tested"]
