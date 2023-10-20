@@ -27,10 +27,9 @@ jobs:
         id: scan
         with:
           image-ref: 'localbuild/testimage:latest'
-          fail-build: false
           format: 'table'
           exit-code: '1'
-          ignore-unfixed: true
+          ignore-unfixed: false
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
       - name: upload Trivy scan SARIF report
