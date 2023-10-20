@@ -27,6 +27,7 @@ jobs:
         id: scan
         with:
           image-ref: 'localbuild/testimage:latest'
+          fail-build: false
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
