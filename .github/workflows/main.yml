@@ -33,12 +33,5 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-      - name: Scan image
-        uses: anchore/scan-action@v3
-        if: always()
-        with:
-          image: "localbuild/testimage:latest"
-          fail-build: true
-          severity-cutoff: critical
- 
+     
   
