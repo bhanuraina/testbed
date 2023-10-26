@@ -1,9 +1,16 @@
-FROM ruby:alpine3.15
-WORKDIR /action
-RUN gem install jwt bundler && \
-    apk add jq && \
-    apk add curl
-   
+FROM python:3
+
+COPY docker/requirements.txt ./
+
+RUN apt update  && apt upgrade -y
+
+RUN apt install -y openjdk-17-jdk
 
 
-ENTRYPOINT [echo "Hello Tested"]
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN python -c "import webp"
+RUN python -m pip install pip-audit
+RUN pip-audit -r requirements.txt
+
+CMD [ "python3", "-m", "syn"]
