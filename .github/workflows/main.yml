@@ -31,4 +31,22 @@ jobs:
           ignore-unfixed: false
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+      - name: Setup trivy executable
+        shell: bash
+        run: |      
+         echo "::group::Installing applications"
+         sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+         wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+         echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+         #Workaround for unrelated expired cert, check https://github.com/cli/cli/issues/6175#issuecomment-1235984381
+         sudo apt-key del C99B11DEB97541F0 && sudo rm -f /etc/apt/sources.list.d/github-cli.list
+         sudo apt-get update 
+         sudo apt-get install trivy -y 
+         echo "::endgroup::"
+      - name: Scan the filesystem using trivy command
+        shell: bash
+        run: | 
+          trivy  fs . --format table --vuln-type  os,library --severity  UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL 
+          ls -l
      
