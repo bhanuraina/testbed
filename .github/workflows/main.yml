@@ -26,7 +26,7 @@ jobs:
       - uses: aquasecurity/trivy-action@master
         id: scan
         with:
-          image-ref: 'localbuild/testimage:latest'
+          scan-type: fs
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
